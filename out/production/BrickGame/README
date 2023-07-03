@@ -1,0 +1,72 @@
+yossikazakov
+207048836
+
+In order to design the Bricker game, I chose two main decoration patterns - inheritance and decorator pattern.
+
+In my project, there are three packages - 'brick_strategies' , 'status_definer_strategies' and 'gameobjects'
+Roughly speaking, to design the first two I used the decorator pattern, and for the last one i used
+inheritance.
+Notice that initially 'status_definer_strategies' that only has 'ResizePaddleStrategy' in it (and the
+'CollisionStrategy' interface for a quicker implementation of it) was a part of 'brick_strategies'
+package. I decided to give this class a package of its own because of two main reasons -
+1) It is NOT a brick strategy (it doesn't have to do anything with brick collision).
+2) 'status_definer_strategies' package can later serve a bunch of different strategies for different
+   status definers (which again, have nothing to do with brick collision)
+
+Let me now describe why i chose those design patterns :
+
+Inheritance served me when I wanted to design the following relationships -
+A Puck and a Ball, a MockPaddle and a Paddle. I noticed that the first is a specific type of the second,
+which suits the inheritance pattern perfectly.
+All the other objects in the 'gameobjects' package, including those above, inherit from GameObject
+class as they are all objects of the game, and they are all manipulated in one way or another
+during the game.
+
+Decorator pattern served me when I built the 'brick_strategies' package.
+Each brick in the game can have multiple (three, in this version) behaviours (a.k.a strategies) when
+colliding with a ball. Although one behaviour they all have in common - they all break (disappear) and get
+removed from the game objects collection upon collision.
+So, intuitively, this should be the base behaviour in the Decorator Design Pattern, on top of which
+any other behaviour can be added.
+All strategies extends the abstract decorator class 'RemoveBrickStrategyDecorator' and implement
+the 'CollisionStrategy' interface. In this way, it was very convenient for me to write 'BrickStrategyFactory'
+and generate with it different combinations of behaviours for every single brick.
+Inheritance could have worked too, but when trying to 'top' a single brick's behaviour with another
+behaviour (which also can be topped with another one and so on), things get much simpler with a Decorator.
+
+Algo-Question
+alotStudyTime: Greedy approach
+    I. The algorithm is correct since this is a task scheduling problem that can be represented
+    with a meteoroid structure thus a greedy algorithm can be used.
+    The greedy principle is scheduling first the shortest tasks available.
+    II. Note: n = |tasks| , m = |timeSlots| , k = max (n,m).
+    Runtime is O(nlogn) + O(mlogm) for sorting the arrays  + O(min( |tasks| , |timeSlots|)).
+    Thus O(klogk).
+
+minLeap: Dynamic approach
+    I. The algorithm reduces the problem to smaller problems, by computing the min leaps to reach the ith
+    leaf 0 < i < n+1.
+    Uses a dynamic table to store the data, a trade off of memory and runtime.
+    II. Note: n  = |leapNum|
+    Runtime is O(n) for outer loop O(n) , inner loop O(n) - stopping condition generates
+    algebraic sequence, O(1) for comparison.
+    Thus O(n^2).
+
+bucketWalk: Dynamic algorithm
+    I. The algorithm reduces the problem to smaller problems, by computing the num of diffrent ways to
+    fill i litters -1 < i < n+1.
+    Uses a dynamic table to store the data, a trade off of memory and runtime.
+    II. Runtime is O(n) for initializing table, outer loop O(n) , comparison and addition O(1).
+    Thus O(n).
+
+numTrees: Dynamic algorithm
+    I. The algorithm reduces the problem to smaller problems, by computing the num structurally
+    unique BST's with i nodes -1 < i < n+1.
+    Uses a dynamic table to store the data, a trade off of memory and runtime.
+    II.Runtime is O(n) for initializing table , Outer loop O(n) , inner loop O(n) when i = n ,
+    direct assignment O(1).
+    Thus O(n^2).
+
+
+
+
