@@ -1,0 +1,1 @@
+![GIF](https://github.com/YossiKazakov/brick-game/blob/master/Brick%20GIF.gif)
